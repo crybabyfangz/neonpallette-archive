@@ -379,15 +379,26 @@ document.addEventListener("DOMContentLoaded", function() {
 <img class="feather" src="https://i.imgur.com/2qV2P5s.png" />
 
 <script>
+  const pwInput = document.getElementById('pw');
+  const lockscreen = document.getElementById('lockscreen');
+
   function checkPassword() {
-    const input = document.getElementById('pw');
-    if (input.value === '020225') {
-      document.getElementById('lockscreen').style.display = 'none';
+    if (pwInput.value.trim() === '020225') {
+      lockscreen.style.display = 'none';
     } else {
-      input.classList.add('shake');
-      setTimeout(() => input.classList.remove('shake'), 500);
+      pwInput.classList.add('shake');
+      setTimeout(() => pwInput.classList.remove('shake'), 500);
     }
   }
+
+  // Button click
+  document.querySelector('#lockscreen button').addEventListener('click', checkPassword);
+
+  // Enter key
+  pwInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') checkPassword();
+  });
+</script>
 
   const metDate = new Date('2024-09-24');
   const datingDate = new Date('2025-02-02');
