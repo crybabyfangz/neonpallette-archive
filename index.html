@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relationship Archive</title>
 <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Cardo:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -10,18 +10,14 @@
     margin: 0;
     font-family: 'Indie Flower', cursive;
     background: #fdf6e3;
-    background-image: repeating-linear-gradient(
-      45deg,
-      #fdf6e3,
-      #fdf6e3 10px,
-      #f7f0d9 10px,
-      #f7f0d9 20px
-    );
+    background-image: 
+      linear-gradient(white 0.1em, transparent 0.1em), 
+      linear-gradient(to right, white 0.1em, transparent 0.1em);
+    background-size: 100% 1.5em, 1.5em 100%;
     color: #3e2f2f;
     overflow-x: hidden;
   }
 
-  /* LOCK SCREEN */
   #lockscreen {
     position: fixed;
     inset: 0;
@@ -74,8 +70,6 @@
   nav { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
   nav a { position: relative; padding: 6px 12px; text-decoration: none; color: #3e2f2f; font-weight: bold; border-radius: 6px; transition: 0.3s; }
   nav a:hover { background: #e7dccb; transform: scale(1.1) rotate(-1deg); box-shadow: 0 0 12px rgba(0,0,0,0.15); }
-  nav a::after { content: ""; position: absolute; width: 6px; height: 6px; background: #fff7c2; border-radius: 50%; opacity: 0; transform: translate(-50%, -50%); transition: 0.3s; }
-  nav a:hover::after { opacity: 1; }
 
   .section {
     width: 85%;
@@ -106,7 +100,7 @@
 </head>
 <body>
 
-<!-- LOCKSCREEN -->
+<!-- LOCK SCREEN -->
 <div id="lockscreen">
   <h1>Enter Password</h1>
   <input type="password" id="pw" maxlength="6" placeholder="******" />
@@ -121,7 +115,7 @@
     <a href="#countdown">Love Countdown</a>
     <a href="#timeline">Timeline</a>
     <a href="#poems">Poems</a>
-    <a href="#video">Christmas Video</a>
+    <a href="#videos">Videos</a>
   </nav>
 </header>
 
@@ -129,9 +123,9 @@
 <div class="section" id="loveletter">
   <h2>Love Letter</h2>
   <p>My dearest love,<br>
-  Every day with you is a treasure I hold close. From the moment our paths first crossed, to our laughter, whispers, and quiet moments, my heart beats only for you. You are my home, my joy, my everything, and I love you more than words could ever capture.<br>
-  Forever yours,<br>
-  Ezzie ❤️</p>
+     Every day with you is a treasure I hold close. From the moment our paths first crossed, to our laughter, whispers, and quiet moments, my heart beats only for you. You are my home, my joy, my everything, and I love you more than words could ever capture.<br>
+     Forever yours,<br>
+     Ezzie ❤️</p>
 </div>
 
 <!-- LOVE COUNTDOWN -->
@@ -153,13 +147,13 @@
   <h2>Poems</h2>
   <div class="poem-box">
     <h3>Like...</h3>
-    <p>Like two stars,<br>They shine apart but share the same light.<br><br>Like a melody,<br>Different notes, but one song so right.<br><br>Like twin flames,<br>Dancing close, but still their own spark.<br><br>Like the ocean tide,<br>Always reaching for the moon in the dark.<br><br>Like you and I.<br><em>Ezzie - 28th Friday February 2025</em></p>
+    <p>Like two stars,<br>They shine apart but share the same light.<br><br>Like a melody,<br>Different notes, but one song so right.<br><br>Like twin flames,<br>Dancing close, but still their own spark.<br><br>Like the ocean tide,<br>Always reaching for the moon in the dark.<br><br>Like you and I.<br><em>Ezzie - 28th February 2025</em></p>
   </div>
 </div>
 
-<!-- VIDEO -->
-<div class="section" id="video">
-  <h2>Christmas Message</h2>
+<!-- VIDEOS -->
+<div class="section" id="videos">
+  <h2>Videos</h2>
   <video controls>
     <source src="" type="video/mp4">
     Your browser doesn't support video.
@@ -171,27 +165,24 @@ const lockscreen = document.getElementById('lockscreen');
 const pwInput = document.getElementById('pw');
 const unlockBtn = document.getElementById('unlockBtn');
 
-// PASSWORD FUNCTION
-function checkPassword() {
-  if(pwInput.value.trim() === "020225") {
-    lockscreen.style.display = "none";
+unlockBtn.addEventListener('click', () => {
+  if(pwInput.value.trim() === '020225'){
+    lockscreen.style.display = 'none';
   } else {
-    pwInput.classList.add("shake");
-    setTimeout(()=>pwInput.classList.remove("shake"), 500);
+    pwInput.classList.add('shake');
+    setTimeout(()=>pwInput.classList.remove('shake'),500);
   }
-}
+});
+pwInput.addEventListener('keypress', e => { if(e.key==='Enter') unlockBtn.click(); });
 
-unlockBtn.addEventListener("click", checkPassword);
-pwInput.addEventListener("keypress", e => { if(e.key==="Enter") checkPassword(); });
-
-// TIMELINE
-const metDate = new Date("2024-09-24");
-const datingDate = new Date("2025-02-02");
+// Timeline
+const metDate = new Date('2024-09-24');
+const datingDate = new Date('2025-02-02');
 function updateTimeline() {
   const now = new Date();
   const daysSinceMet = Math.floor((now - metDate)/(1000*60*60*24));
   const daysSinceDating = Math.floor((now - datingDate)/(1000*60*60*24));
-  document.getElementById("timeline-text").innerHTML = `
+  document.getElementById('timeline-text').innerHTML = `
     <p>We first spoke: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
     <p>We started dating: <b>February 2, 2025</b> (${daysSinceDating} days ago)</p>
     <p>Current time: <b>${now.toLocaleString()}</b></p>
@@ -200,15 +191,14 @@ function updateTimeline() {
 setInterval(updateTimeline,1000);
 updateTimeline();
 
-// LOVE COUNTDOWN
-function updateLoveDuration() {
+// Love countdown
+const startDating = new Date("2025-02-02");
+function updateLoveDuration(){
   const now = new Date();
-  const startDating = new Date("2025-02-02");
-  let months=(now.getFullYear()-startDating.getFullYear())*12;
-  months+=now.getMonth()-startDating.getMonth();
-  let days=now.getDate()-startDating.getDate();
-  if(days<0){months-=1;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
-  document.getElementById("loveDuration").innerText=`${months} months and ${days} days`;
+  let months = (now.getFullYear() - startDating.getFullYear())*12 + (now.getMonth() - startDating.getMonth());
+  let days = now.getDate() - startDating.getDate();
+  if(days < 0){ months -= 1; days += new Date(now.getFullYear(),now.getMonth(),0).getDate(); }
+  document.getElementById("loveDuration").innerText = `${months} months and ${days} days`;
 }
 setInterval(updateLoveDuration,1000);
 updateLoveDuration();
