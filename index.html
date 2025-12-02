@@ -1,90 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Relationship Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cardo:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cardo', serif;
-      background: #eee6dd url('https://i.imgur.com/0Z7G3bi.png');
-      background-size: cover;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relationship Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Shadows+Into+Light&family=Cardo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Patrick Hand', cursive;
+    background: #fdf6e3 url('https://i.imgur.com/QWHKxFr.png') center top no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    color: #3b2f2f;
+  }
 
-    /* Password Screen */
-    #lockscreen {
-      position: fixed;
-      inset: 0;
-      background: rgba(25,20,20,0.9);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #f7f1e3;
-      font-family: 'Cinzel', serif;
-      z-index: 9999;
-    }
-    #lockscreen h1 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
-    #lockscreen input {
-      padding: 10px 15px;
-      border: 2px solid #c9b9a5;
-      background: #fffaf3;
-      font-size: 1.1rem;
-      border-radius: 6px;
-      text-align: center;
-      width: 180px;
-    }
-    #lockscreen button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-family: 'Cinzel', serif;
-      background: #8e6f59;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+  #lockscreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(25,20,20,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff8f0;
+    font-family: 'Shadows Into Light', cursive;
+    z-index: 9999;
+  }
+  #lockscreen h1 { font-size: 2.5rem; margin-bottom: 20px; }
+  #lockscreen input {
+    padding: 12px 15px;
+    border: 2px solid #c9b9a5;
+    background: #fffaf3;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 180px;
+  }
+  #lockscreen button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-family: 'Shadows Into Light', cursive;
+    background: #a67855;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .shake { animation: shake 0.3s ease; }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-8px); }
+    100% { transform: translateX(0); }
+  }
 
-    .shake {
-      animation: shake 0.3s ease;
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-8px); }
-      50% { transform: translateX(8px); }
-      75% { transform: translateX(-8px); }
-      100% { transform: translateX(0); }
-    }
+  header {
+    text-align: center;
+    padding: 40px;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 2.8rem;
+    color: #4b3a3a;
+    text-shadow: 1px 1px #f5e4d2;
+  }
 
-    header {
-      text-align: center;
-      padding: 40px;
-      font-family: 'Cinzel', serif;
-      font-size: 2.4rem;
-      color: #4c3a3a;
-      text-shadow: 1px 1px #f5e4d2;
-    }
+  nav {
+    margin-top: 20px;
+  }
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    position: relative;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.7);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  nav a:hover {
+    transform: scale(1.1) rotate(-1deg);
+    background: rgba(255,255,255,0.95);
+  }
 
-    .section {
-      width: 85%;
-      margin: auto;
-      background: rgba(255,250,240,0.85);
-      border: 2px solid #cbb89b;
-      padding: 25px;
-      margin-bottom: 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease;
-    }
+  .section {
+    width: 85%;
+    margin: 40px auto;
+    background: rgba(255,250,240,0.95);
+    border: 2px solid #cbb89b;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+  }
+  .section:hover { transform: scale(1.01); }
 
-    h2 {
-      font-family: 'Cinzel', serif;
+  h2 {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .subtext { font-style: italic; color: #6b5b4e; }
+
+  .intro-love-letter {
+    max-width: 700px;
+    margin: 0 auto 25px;
+    font-size: 1.4rem;
+    background: rgba(255,255,255,0.6);
+    padding: 20px;
+    border: 2px solid #d1c2ad;
+    border-radius: 12px;
+    text-shadow: 0 0 4px rgba(0,0,0,0.1);
+  }
+
+  .poem-box {
+    border-left: 3px solid #a98977;
+    padding-left: 14px;
+    margin-bottom: 20px;
+    background: rgba(255,250,250,0.7);
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .poem-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  }
+
+  video { width: 100%; border-radius: 10px; }
+
+  @keyframes sparkle {
+    0%,100% { opacity:0.2; transform:scale(1); }
+    50% { opacity:1; transform:scale(1.3); }
+  }
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #d7c7ff;
+    border-radius: 50%;
+    animation: sparkle 2s infinite;
+  }
+</style>
+</head>
+<body>
+
+<div id="lockscreen">
+  <h1>Enter Password</h1>
+  <input type="password" id="pw" maxlength="6" placeholder="******" />
+  <button onclick="checkPassword()">Open</button>
+</div>
+
+<header>
+  <h1>Relationship Archive</h1>
+  <p class="intro-love-letter">My beloved, this archive is a tiny universe of us — every memory, heartbeat, and soft moment finds a home here.</p>
+  <nav>
+    <a href="#loveletter">Love Letter</a>
+    <a href="#countdown">Love Countdown</a>
+    <a href="#dates">Timeline</a>
+    <a href="#poems">Poems</a>
+    <a href="#video">Video</a>
+  </nav>
+</header>
+
+<!-- Love Letter -->
+<div class="section" id="loveletter">
+  <h2>Love Letter</h2>
+  <p>My dearest love,<br>
+     Every day with you is a treasure I hold close. From the moment our paths first crossed, to our laughter, whispers, and quiet moments, my heart beats only for you. You are my home, my joy, my everything, and I love you more than words could ever capture.<br>
+     Forever yours,<br>
+     Ezzie ❤️</p>
+</div>
+
+<!-- Love Countdown -->
+<div class="section" id="countdown">
+  <h2>Love Countdown</h2>
+  <p id="loveDuration"></p>
+  <small>For each day I've loved you, and for each day I'll continue to love you.<br>(P.S. it's one month under what you think ❤️)</small>
+</div>
+
+<!-- Timeline -->
+<div class="section" id="dates">
+  <h2>Our Timeline</h2>
+  <div id="timeline-text"></div>
+  <p class="subtext">A record of our beautiful beginning and everything since.</p>
+</div>
+
+<!-- Poems -->
+<div class="section" id="poems">
+  <h2>Poems</h2>
+  <div id="poem-list">
+    <div class="poem-box">
+      <h3>Like...</h3>
+      <p>Like two stars,<br>They shine apart but share the same light.<br><br>
+         Like a melody,<br>Different notes, but one song so right.<br><br>
+         Like twin flames,<br>Dancing close, but still their own spark.<br><br>
+         Like the ocean tide,<br>Always reaching for the moon in the dark.<br><br>
+         Like you and I.<br><em>Ezzie - 28th Feb 2025</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- Video -->
+<div class="section" id="video">
+  <h2>Christmas Message</h2>
+  <video controls>
+    <source src="" type="video/mp4">
+    Your browser doesn't support video.
+  </video>
+</div>
+
+<img class="feather" src="https://i.imgur.com/2qV2P5s.png" />
+
+<script>
+function checkPassword(){
+  const input=document.getElementById('pw');
+  if(input.value==='020225'){
+    document.getElementById('lockscreen').style.display='none';
+  } else {
+    input.classList.add('shake');
+    setTimeout(()=>input.classList.remove('shake'),500);
+  }
+}
+
+/* Timeline dates */
+const metDate=new Date('2024-09-24T00:00:00');
+const datingDate=new Date('2025-02-02T00:00:00');
+
+function updateTimeline(){
+  const now=new Date();
+  const daysSinceMet=Math.floor((now-metDate)/(1000*60*60*24));
+  const daysSinceDating=Math.floor((now-datingDate)/(1000*60*60*24));
+  document.getElementById('timeline-text').innerHTML=`
+    <p>We first spoke: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
+    <p>We started dating: <b>February 2, 2025</b> (${daysSinceDating} days ago)</p>
+    <p>Current time: <b>${now.toLocaleString()}</b></p>
+  `;
+}
+setInterval(updateTimeline,1000);
+updateTimeline();
+
+/* Love Countdown */
+function updateLoveDuration(){
+  const now=new Date();
+  let months=(now.getFullYear()-datingDate.getFullYear())*12;
+  months+=now.getMonth()-datingDate.getMonth();
+  let days=now.getDate()-datingDate.getDate();
+  if(days<0){months-=1; days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
+  document.getElementById('loveDuration').innerText=`${months} months and ${days} days`;
+}
+setInterval(updateLoveDuration,1000);
+updateLoveDuration();
+
+/* Floating sparkles */
+setInterval(()=>{
+  const s=document.createElement('div');
+  s.classList.add('sparkle');
+  s.style.left=Math.random()*100+'vw';
+  s.style.top=Math.random()*100+'vh';
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2000);
+},800);
+</script>
+
+</body>
+</html>
       font-size: 1.8rem;
       margin-bottom: 10px;
     }
