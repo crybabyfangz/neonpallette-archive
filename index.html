@@ -9,10 +9,10 @@
   body {
     margin: 0;
     font-family: 'Indie Flower', cursive;
-    background: #fdf6e3 url('assets/paper-background.jpg') no-repeat center center fixed;
+    background: url('assets/background.jpg') no-repeat center center fixed;
     background-size: cover;
-    overflow-x: hidden;
     color: #3e2f2f;
+    overflow-x: hidden;
   }
 
   /* PASSWORD SCREEN */
@@ -28,10 +28,7 @@
     font-family: 'Cardo', serif;
     z-index: 9999;
   }
-  #lockscreen h1 {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-  }
+  #lockscreen h1 { font-size: 2.2rem; margin-bottom: 20px; }
   #lockscreen input {
     padding: 10px 15px;
     border: 2px solid #c9b9a5;
@@ -90,6 +87,18 @@
     transform: scale(1.1) rotate(-1deg);
     box-shadow: 0 0 12px rgba(0,0,0,0.15);
   }
+  nav a::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff7c2;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: 0.3s;
+  }
+  nav a:hover::after { opacity: 1; }
 
   .section {
     width: 85%;
@@ -118,33 +127,33 @@
 
   video { width: 100%; border-radius: 10px; }
 
-  .feather {
+  .feather, .pen {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
     width: 70px;
     opacity: 0.75;
-    animation: floatfeather 5s ease-in-out infinite;
+    z-index: 900;
   }
-  @keyframes floatfeather {
+  .pen { bottom: 20px; right: 20px; }
+
+  .sparkle-gif {
+    position: absolute;
+    width: 30px;
+    pointer-events: none;
+    animation: float 5s ease-in-out infinite;
+  }
+  @keyframes float {
     0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
     50% { transform: translateY(-15px) rotate(4deg); opacity: 1; }
     100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
   }
 
-  @keyframes sparkle {
-    0%,100% { opacity: 0.2; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); }
+  .art-gallery img {
+    width: 200px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
   }
-  .sparkle {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: #d7c7ff;
-    border-radius: 50%;
-    animation: sparkle 2s infinite;
-  }
-
+  .art-gallery { display: flex; flex-wrap: wrap; justify-content: center; }
 </style>
 </head>
 <body>
@@ -158,13 +167,14 @@
 
 <header>
   <h1>Relationship Archive</h1>
-  <p class="intro-love-letter">My beloved, this archive is a tiny universe of us every memory, every heartbeat, every soft moment finds a home.</p>
+  <p class="intro-love-letter">My beloved, this archive is a tiny universe of us — every memory, every heartbeat, every soft moment finds a home.</p>
   <nav>
     <a href="#loveletter">Love Letter</a>
     <a href="#countdown">Love Countdown</a>
     <a href="#timeline">Timeline</a>
     <a href="#poems">Poems</a>
     <a href="#videos">Videos</a>
+    <a href="#artgallery">Art Gallery</a>
   </nav>
 </header>
 
@@ -208,7 +218,7 @@
        <em>Ezzie - 28th Friday February 2025</em></p>
   </div>
   <div class="poem-box">
-    <h3>Just us</h3>
+    <h3>Just Us</h3>
     <p>Love is in the quiet moments<br>
        in the way your words feel like home,<br>
        in laughter that lingers long after,<br>
@@ -231,21 +241,6 @@
        The world made sense because of you.<br>
        <em>Ezzie - 25th Monday March 2025</em></p>
   </div>
-  <div class="poem-box">
-    <h3>The first</h3>
-    <p>I said it like it's nothing.<br>
-       I said it like it's everything.<br><br>
-       Tossed it like a coin,<br>
-       like maybe you'd step over it again.<br>
-       But this time,<br>
-       you picked it up.<br>
-       Held it like it mattered.<br><br>
-       You said it like it's nothing.<br>
-       You said it like it's everything.<br><br>
-       And suddenly,<br>
-       I was everything too.<br>
-       <em>Ezzie - 07 Monday April 2025</em></p>
-  </div>
 </div>
 
 <!-- VIDEOS -->
@@ -257,26 +252,31 @@
   </video>
 </div>
 
-<img class="feather" src="https://i.imgur.com/2qV2P5s.png" />
+<!-- ART GALLERY -->
+<div class="section" id="artgallery">
+  <h2>Art Gallery</h2>
+  <div class="art-gallery" id="art-gallery-container"></div>
+</div>
+
+<img class="pen" src="assets/pen.webp" />
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // Password
   const pwInput = document.getElementById('pw');
   const lockscreen = document.getElementById('lockscreen');
   const button = lockscreen.querySelector('button');
 
-  button.addEventListener('click', function() {
-    if(pwInput.value === '020225'){
+  function checkPassword() {
+    if(pwInput.value.trim() === '020225'){
       lockscreen.style.display = 'none';
     } else {
       pwInput.classList.add('shake');
       setTimeout(()=>pwInput.classList.remove('shake'),500);
     }
-  });
-
-  pwInput.addEventListener('keypress', function(e){
-    if(e.key === 'Enter') button.click();
-  });
+  }
+  button.addEventListener('click', checkPassword);
+  pwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') checkPassword(); });
 
   // Timeline
   const metDate = new Date('2024-09-24');
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const daysSinceMet = Math.floor((now - metDate)/(1000*60*60*24));
     const daysSinceDating = Math.floor((now - datingDate)/(1000*60*60*24));
     document.getElementById('timeline-text').innerHTML = `
-      <p>We first spoke in dms on: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
+      <p>We first spoke in DMs on: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
       <p>We started dating on: <b>February 2, 2025</b> (${daysSinceDating} days ago)</p>
       <p>Current time: <b>${now.toLocaleString()}</b></p>
     `;
@@ -294,10 +294,10 @@ document.addEventListener("DOMContentLoaded", function() {
   setInterval(updateTimeline,1000);
   updateTimeline();
 
-  // Love countdown
+  // Love Countdown
   const startDating = new Date("2025-02-02");
   function updateLoveDuration(){
-    const now=new Date();
+    const now = new Date();
     let months=(now.getFullYear()-startDating.getFullYear())*12;
     months+=now.getMonth()-startDating.getMonth();
     let days=now.getDate()-startDating.getDate();
@@ -308,15 +308,24 @@ document.addEventListener("DOMContentLoaded", function() {
   updateLoveDuration();
 
   // Sparkles
-  setInterval(()=>{
-    const s=document.createElement('div');
-    s.classList.add('sparkle');
-    s.style.left=Math.random()*100+'vw';
-    s.style.top=Math.random()*100+'vh';
+  setInterval(() => {
+    const s = document.createElement('img');
+    s.src = 'assets/sparkles.gif';
+    s.classList.add('sparkle-gif');
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.top = Math.random()*100 + 'vh';
     document.body.appendChild(s);
     setTimeout(()=>s.remove(),2000);
   },800);
 
+  // Art Gallery
+  const artGalleryContainer = document.getElementById('art-gallery-container');
+  const artImages = ['art1.jpg','art2.jpg','art3.jpg']; // Add your image filenames here
+  artImages.forEach(img => {
+    const image = document.createElement('img');
+    image.src = `assets/art_gallery/${img}`;
+    artGalleryContainer.appendChild(image);
+  });
 });
 </script>
 </body>
