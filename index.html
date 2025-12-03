@@ -271,7 +271,7 @@
        You said it like it's everything.<br><br>
        And suddenly,<br>
        I was everything too.<br>
-       <em>Ezzie - 07 Monday April 2025</em></p>
+       <em>Ezzie - 7th Monday April 2025</em></p>
   </div>
 </div>
 
@@ -316,13 +316,16 @@ document.addEventListener("DOMContentLoaded", function() {
   // Timeline
   const metDate = new Date('2024-09-24');
   const datingDate = new Date('2025-02-02');
+  const loveDate = new Date ('2025-04-07');
   function updateTimeline(){
     const now = new Date();
     const daysSinceMet = Math.floor((now - metDate)/(1000*60*60*24));
     const daysSinceDating = Math.floor((now - datingDate)/(1000*60*60*24));
+    const daysSinceLove = Math.floor((now - loveDate)/(1000*60*60*24));
     document.getElementById('timeline-text').innerHTML = `
       <p>We first spoke in dms on: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
       <p>We started dating on: <b>February 2, 2025</b> (${daysSinceDating} days ago)</p>
+      <p>Youe first 'I love you' was on: <b>April 7, 2025</b> (${daysSinceLove} days ago)</p>
       <p>Current time: <b>${now.toLocaleString()}</b></p>
     `;
   }
