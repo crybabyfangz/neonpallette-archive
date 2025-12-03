@@ -9,10 +9,10 @@
   body {
     margin: 0;
     font-family: 'Indie Flower', cursive;
-    background: url('assets/background.jpg') no-repeat center center fixed;
+    background: #fff9e6 url('assets/background.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #3e2f2f;
     overflow-x: hidden;
+    color: #3e2f2f;
   }
 
   /* PASSWORD SCREEN */
@@ -127,33 +127,51 @@
 
   video { width: 100%; border-radius: 10px; }
 
-  .feather, .pen {
+  .feather {
     position: fixed;
+    right: 20px;
+    bottom: 20px;
     width: 70px;
     opacity: 0.75;
-    z-index: 900;
+    animation: floatfeather 5s ease-in-out infinite;
   }
-  .pen { bottom: 20px; right: 20px; }
-
-  .sparkle-gif {
-    position: absolute;
-    width: 30px;
-    pointer-events: none;
-    animation: float 5s ease-in-out infinite;
-  }
-  @keyframes float {
+  @keyframes floatfeather {
     0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
     50% { transform: translateY(-15px) rotate(4deg); opacity: 1; }
     100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
   }
 
-  .art-gallery img {
-    width: 200px;
-    margin: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  @keyframes sparkle {
+    0%,100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
   }
-  .art-gallery { display: flex; flex-wrap: wrap; justify-content: center; }
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #d7c7ff;
+    border-radius: 50%;
+    animation: sparkle 2s infinite;
+  }
+
+  /* Gallery Grid */
+  #gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-top: 15px;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    transition: transform 0.25s ease;
+  }
+  .gallery-item img:hover {
+    transform: scale(1.04) rotate(-1deg);
+  }
 </style>
 </head>
 <body>
@@ -167,14 +185,14 @@
 
 <header>
   <h1>Relationship Archive</h1>
-  <p class="intro-love-letter">My beloved, this archive is a tiny universe of us every memory, every heartbeat, every soft moment finds a home.</p>
+  <p class="intro-love-letter">My beloved, this archive is a tiny universe of us — every memory, every heartbeat, every soft moment finds a home.</p>
   <nav>
     <a href="#loveletter">Love Letter</a>
     <a href="#countdown">Love Countdown</a>
     <a href="#timeline">Timeline</a>
     <a href="#poems">Poems</a>
-    <a href="#videos">Videos</a>
-    <a href="#artgallery">Art Gallery</a>
+    <a href="#gallery">Art Gallery</a>
+    <a href="#video">Videos</a>
   </nav>
 </header>
 
@@ -218,7 +236,7 @@
        <em>Ezzie - 28th Friday February 2025</em></p>
   </div>
   <div class="poem-box">
-    <h3>Just Us</h3>
+    <h3>Just us</h3>
     <p>Love is in the quiet moments<br>
        in the way your words feel like home,<br>
        in laughter that lingers long after,<br>
@@ -238,30 +256,34 @@
        One ding, the screen lit up, and there you were.<br>
        A simple line, the softest stir,<br>
        and suddenly the sky turned blue!<br>
-       The world made sense because of you.<br>
        <em>Ezzie - 25th Monday March 2025</em></p>
-<div class="poem-box">
-  <h3>The first</h3>
-  <p>I said it like it's nothing.<br>
-     I said it like it's everything.<br><br>
-
-     Tossed it like a coin,<br>
-     like maybe you'd step over it again.<br>
-     But this time,<br>
-     you picked it up.<br>
-     Held it like it mattered.<br><br>
-
-     You said it like it's nothing.<br>
-     You said it like it's everything.<br><br>
-
-     And suddenly,<br>
-     I was everything too.<br>
-     <em>Ezzie - 07 Monday April 2025</em>
+  </div>
+  <div class="poem-box">
+    <h3>The first</h3>
+    <p>I said it like it's nothing.<br>
+       I said it like it's everything.<br><br>
+       Tossed it like a coin,<br>
+       like maybe you'd step over it again.<br>
+       But this time,<br>
+       you picked it up.<br>
+       Held it like it mattered.<br><br>
+       You said it like it's nothing.<br>
+       You said it like it's everything.<br><br>
+       And suddenly,<br>
+       I was everything too.<br>
+       <em>Ezzie - 07 Monday April 2025</em></p>
   </div>
 </div>
 
-<!-- VIDEOS -->
-<div class="section" id="videos">
+<!-- ART GALLERY -->
+<div class="section" id="gallery">
+  <h2>Art Gallery</h2>
+  <p class="subtext">Our drawings, moments, and little pieces of us.</p>
+  <div id="gallery-grid"></div>
+</div>
+
+<!-- VIDEO SECTION -->
+<div class="section" id="video">
   <h2>Videos</h2>
   <video controls>
     <source src="" type="video/mp4">
@@ -269,31 +291,26 @@
   </video>
 </div>
 
-<!-- ART GALLERY -->
-<div class="section" id="artgallery">
-  <h2>Art Gallery</h2>
-  <div class="art-gallery" id="art-gallery-container"></div>
-</div>
-
-<img class="pen" src="assets/pen.webp" />
+<img class="feather" src="assets/pen.webp" />
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  // Password
   const pwInput = document.getElementById('pw');
   const lockscreen = document.getElementById('lockscreen');
   const button = lockscreen.querySelector('button');
 
-  function checkPassword() {
-    if(pwInput.value.trim() === '020225'){
+  button.addEventListener('click', function() {
+    if(pwInput.value === '020225'){
       lockscreen.style.display = 'none';
     } else {
       pwInput.classList.add('shake');
       setTimeout(()=>pwInput.classList.remove('shake'),500);
     }
-  }
-  button.addEventListener('click', checkPassword);
-  pwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') checkPassword(); });
+  });
+
+  pwInput.addEventListener('keypress', function(e){
+    if(e.key === 'Enter') button.click();
+  });
 
   // Timeline
   const metDate = new Date('2024-09-24');
@@ -303,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const daysSinceMet = Math.floor((now - metDate)/(1000*60*60*24));
     const daysSinceDating = Math.floor((now - datingDate)/(1000*60*60*24));
     document.getElementById('timeline-text').innerHTML = `
-      <p>We first spoke in DMs on: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
+      <p>We first spoke in dms on: <b>September 24, 2024</b> (${daysSinceMet} days ago)</p>
       <p>We started dating on: <b>February 2, 2025</b> (${daysSinceDating} days ago)</p>
       <p>Current time: <b>${now.toLocaleString()}</b></p>
     `;
@@ -311,10 +328,10 @@ document.addEventListener("DOMContentLoaded", function() {
   setInterval(updateTimeline,1000);
   updateTimeline();
 
-  // Love Countdown
+  // Love countdown
   const startDating = new Date("2025-02-02");
   function updateLoveDuration(){
-    const now = new Date();
+    const now=new Date();
     let months=(now.getFullYear()-startDating.getFullYear())*12;
     months+=now.getMonth()-startDating.getMonth();
     let days=now.getDate()-startDating.getDate();
@@ -325,25 +342,38 @@ document.addEventListener("DOMContentLoaded", function() {
   updateLoveDuration();
 
   // Sparkles
-  setInterval(() => {
-    const s = document.createElement('img');
-    s.src = 'assets/sparkles.gif';
-    s.classList.add('sparkle-gif');
-    s.style.left = Math.random()*100 + 'vw';
-    s.style.top = Math.random()*100 + 'vh';
+  setInterval(()=>{
+    const s=document.createElement('div');
+    s.classList.add('sparkle');
+    s.style.left=Math.random()*100+'vw';
+    s.style.top=Math.random()*100+'vh';
     document.body.appendChild(s);
     setTimeout(()=>s.remove(),2000);
   },800);
 
-  // Art Gallery
-  const artGalleryContainer = document.getElementById('art-gallery-container');
-  const artImages = ['art1.jpg','art2.jpg','art3.jpg']; // Add your image filenames here
-  artImages.forEach(img => {
-    const image = document.createElement('img');
-    image.src = `assets/art_gallery/${img}`;
-    artGalleryContainer.appendChild(image);
+  // ART GALLERY
+  const galleryImages = [
+    "alien","anti","apple","birth16","bite","bob","card1","card2","card3",
+    "chibi","chibimwah","collab","exhale","eye","firstart","float","flowers",
+    "garden","hang","happyvalentine","heart","hug","hugkiss","icecream",
+    "inhale","inlove","Tit Milk","mesmer","mwah","ofeye","off","pow",
+    "jimtine","joint","kissy","kitkat","sleepless","smooch","stare","thought",
+    "titmilk","uscollab","bang"
+  ];
+
+  const grid = document.getElementById("gallery-grid");
+  galleryImages.forEach(name => {
+    const div = document.createElement("div");
+    div.classList.add("gallery-item");
+    const extension = name === "bang" ? "gif" : "webp";
+    const img = document.createElement("img");
+    img.src = `assets/${name}.${extension}`;
+    img.alt = name;
+    div.appendChild(img);
+    grid.appendChild(div);
   });
 });
 </script>
+
 </body>
 </html>
