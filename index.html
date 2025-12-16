@@ -175,7 +175,9 @@
 </style>
 </head>
 <body>
-
+  
+<audio id="bg-music" preload="auto"></audio> 
+  
 <!-- PASSWORD -->
 <div id="lockscreen">
   <h1>Enter Password</h1>
@@ -301,9 +303,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const button = lockscreen.querySelector('button');
 
   button.addEventListener('click', function() {
-    if(pwInput.value === '020225'){
-      lockscreen.style.display = 'none';
-    } else {
+  if(pwInput.value === '020225'){
+    lockscreen.style.display = 'none';
+    playMusic(); // 🎶 START MUSIC
+  } else {
       pwInput.classList.add('shake');
       setTimeout(()=>pwInput.classList.remove('shake'),500);
     }
