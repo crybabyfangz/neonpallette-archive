@@ -297,6 +297,27 @@
 <img class="sparkle" src="assets/sparkles.gif" />
   
 <script>
+  // 🎵 Background music (SpaceHey-style)
+const musicTracks = [
+  "music/song1.mp3",
+  "music/song2.mp3",
+  "music/song3.mp3"
+];
+
+const bgMusic = document.getElementById("bg-music");
+let musicIndex = Math.floor(Math.random() * musicTracks.length);
+
+function playMusic() {
+  bgMusic.src = musicTracks[musicIndex];
+  bgMusic.volume = 0.5;
+  bgMusic.play();
+}
+
+bgMusic.addEventListener("ended", () => {
+  musicIndex = (musicIndex + 1) % musicTracks.length;
+  playMusic();
+});
+
 document.addEventListener("DOMContentLoaded", function() {
   const pwInput = document.getElementById('pw');
   const lockscreen = document.getElementById('lockscreen');
