@@ -307,11 +307,15 @@ const musicTracks = [
 const bgMusic = document.getElementById("bg-music");
 let musicIndex = Math.floor(Math.random() * musicTracks.length);
 
-function playMusic() {
-  bgMusic.src = musicTracks[musicIndex];
-  bgMusic.volume = 0.5;
-  bgMusic.play();
-}
+bgMusic.volume = 0;
+bgMusic.play();
+let v = 0;
+const fade = setInterval(() => {
+  v += 0.02;
+  bgMusic.volume = Math.min(v, 0.5);
+  if (v >= 0.5) clearInterval(fade);
+}, 100);
+
 
 bgMusic.addEventListener("ended", () => {
   musicIndex = (musicIndex + 1) % musicTracks.length;
